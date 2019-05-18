@@ -9,6 +9,10 @@
 --3.5 帖子回复表
 --    帖子, 回复人, 回复内容, 回复时间
 
+create database if not exists yx_community DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci;
+grant all privileges on yx_community.* to yxc_user@'localhost' identified by 'YXC2019@cji$';
+flush privileges;
+
 drop table if exists t_user;
 create table t_user(
     id int not null auto_increment comment '主键',
