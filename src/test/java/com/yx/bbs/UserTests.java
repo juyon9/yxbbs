@@ -36,6 +36,16 @@ public class UserTests {
 	}
 
 	@Test
+	public void login() {
+		User u = repo.queryByUsernameAndPassword("juyon01@163.com", StringUtil.encodeStr("1234567"));
+		if (u != null) {
+			System.out.println(u);
+		} else {
+			System.out.println("用户不存在...");
+		}
+	}
+
+	@Test
 	public void page() {
 		// 统计数量
 		System.out.println("Juyon->count:" + repo.count());

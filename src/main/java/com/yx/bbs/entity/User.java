@@ -79,6 +79,22 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Timestamp getRegistTime() {
+		return registTime;
+	}
+
+	public void setRegistTime(Timestamp registTime) {
+		this.registTime = registTime;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", name=" + name + ", status="
