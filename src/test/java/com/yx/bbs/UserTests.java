@@ -3,10 +3,11 @@ package com.yx.bbs;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,8 @@ import com.yx.bbs.util.StringUtil;
 @SpringBootTest
 public class UserTests {
 
+	private static final Logger LOG = LoggerFactory.getLogger(UserTests.class);
+
 	@Autowired
 	private UserRepository repo;
 
@@ -36,49 +39,46 @@ public class UserTests {
 	}
 
 	@Test
+	public void updateUser() {
+		User user = new User("Juyon12@163.com", StringUtil.encodeStr("123456"), "Juyon12", "y",
+				new Timestamp(System.currentTimeMillis()));
+		user.setId(11);
+		repo.save(user);
+	}
+
+	@Test
+	public void userSaveAndDel() {
+		User user = new User("Juyon12@163.com", StringUtil.encodeStr("123456"), "Juyon12", "y",
+				new Timestamp(System.currentTimeMillis()));
+		User savedUser = repo.save(user);
+		long savedUserId = savedUser.getId();
+		LOG.warn("Juyon->新增用户,id为: " + savedUserId);
+		repo.deleteById(savedUserId);
+	}
+
+	@Test
 	public void login() {
 		User u = repo.queryByUsernameAndPassword("juyon01@163.com", StringUtil.encodeStr("1234567"));
 		if (u != null) {
-			System.out.println(u);
+			LOG.warn(u.toString());
 		} else {
-			System.out.println("用户不存在...");
+			LOG.warn("用户不存在...");
 		}
 	}
 
 	@Test
 	public void page() {
-		// 统计数量
-		System.out.println("Juyon->count:" + repo.count());
-
-		// 按id查询
-		System.out.println("Juyon->existsById:" + repo.existsById(1l));
-
-		// 对象包装，避免空指针
-		Optional<User> opt = repo.findById(2l);
-		if (opt.isPresent()) {
-			User user = opt.get();
-			System.out.println(user);
-		} else {
-			System.out.println("未查询到对象.");
-		}
-
-		// 查询所有
-		Iterable<User> all = repo.findAll();
-		all.forEach((u) -> {
-			System.out.println(u);
-		});
-
 		// 分页查询
 		Page<User> pageAll = repo.findAll(PageRequest.of(0, 3, Direction.DESC, "registTime"));
-		System.out.println("Juyon->getTotalElements=" + pageAll.getTotalElements());
-		System.out.println("Juyon->getTotalPages=" + pageAll.getTotalPages());
-		System.out.println("Juyon->getSize=" + pageAll.getSize());
-		System.out.println("Juyon->getNumber=" + pageAll.getNumber());
 		List<User> content = pageAll.getContent();
-		System.out.println("Juyon-> content.size = " + content.size());
-		content.forEach((u) -> {
-			System.out.println("Juyon-> u = " + u);
-		});
+		String pageInfo = String.format("Juyon->页码:%d, 条数:%d, 总条数:%s", pageAll.getNumber() + 1, content.size(),
+				pageAll.getTotalElements());
+		LOG.warn(pageInfo);
+		LOG.warn("Juyon->数据：");
+		int i = 1;
+		for (User u : content) {
+			LOG.warn("\t" + (i++) + ". " + u);
+		}
 
 	}
 

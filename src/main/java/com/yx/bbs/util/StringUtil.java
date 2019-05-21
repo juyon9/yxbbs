@@ -6,6 +6,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 public class StringUtil {
+
+	public static final String SESSION_USER = "sesionUser";
+
 	/**
 	 * 
 	 * 生成加密串
