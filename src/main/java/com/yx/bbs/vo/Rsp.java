@@ -1,5 +1,7 @@
 package com.yx.bbs.vo;
 
+import com.yx.bbs.constant.RspType;
+
 public class Rsp {
 
 	// 0表示成功
@@ -13,8 +15,8 @@ public class Rsp {
 	 * @param rspType 错误类型枚举
 	 * @return
 	 */
-	public static Rsp instance(Rsp.type rspType) {
-		return new Rsp(rspType.code, rspType.name());
+	public static Rsp instance(RspType rspType) {
+		return new Rsp(rspType.getCode(), rspType.name());
 	}
 
 	/**
@@ -25,16 +27,6 @@ public class Rsp {
 	 */
 	public static Rsp instance(String msg) {
 		return new Rsp(-1, msg);
-	}
-
-	public enum type {
-		成功(0), 未知错误(1), 帐号或密码错误(2), 账户已冻结(3);
-		private int code;
-
-		private type(int code) {
-			this.code = code;
-		}
-
 	}
 
 	private Rsp(int code, String msg) {

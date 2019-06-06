@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>技术论坛-芸享社区</title>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript">
+	function login() {
+		var userName = $("#userName").val();
+		var userPwd = $("#pwd").val();
+		$.post("/api/login", {
+			name : userName,
+			pwd : userPwd
+		}, function(data, status) {
+			$("#iMsg").text("code=" + data.code + ", msg=" + data.msg);
+		});
+	}
+
+	function hello() {
+		$.post("/api/hello", function(data, status) {
+			$("#iMsg").text("code=" + data.code + ", msg=" + data.msg);
+		});
+	}
+</script>
+</head>
+<body>
+
+	<div style="text-align: center;">
+		<p style="width: 300px;">
+			帐号:<input id="userName" type="text" style="width: 200;">
+		</p>
+		<p style="width: 300px;">
+			密码:<input id="pwd" type="password" style="width: 200;">
+		</p>
+		<p style="text-align: center;">
+			<button onclick="login()" style="width:100px;height:30px;">登 录</button>
+		</p>
+		<p style="text-align: center;">
+			<button onclick="hello()" style="width:100px;height:30px;">打招呼</button>
+		</p>
+		<div id="iMsg"></div>
+	</div>
+</body>
+</html>

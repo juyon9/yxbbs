@@ -32,6 +32,17 @@ public class Reply implements Serializable {
 	@Column(name = "c_time", nullable = false)
 	private Timestamp replyTime;
 
+	public Reply(long postsId, long replyUser, String content, Timestamp replyTime) {
+		super();
+		this.postsId = postsId;
+		this.replyUser = replyUser;
+		this.content = content;
+		this.replyTime = replyTime;
+	}
+
+	public Reply() {
+	}
+
 	public long getId() {
 		return id;
 	}

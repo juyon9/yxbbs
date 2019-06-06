@@ -1,10 +1,10 @@
 package com.yx.bbs.dao;
 
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import com.yx.bbs.entity.User;
+import com.yx.bbs.entity.Posts;
 
-public interface PostsRepository extends PagingAndSortingRepository<User, Long> {
-	
-	
+public interface PostsRepository extends PagingAndSortingRepository<Posts, Long>, JpaSpecificationExecutor<Posts> {
+
 }

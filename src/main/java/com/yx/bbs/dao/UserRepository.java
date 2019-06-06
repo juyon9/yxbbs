@@ -17,4 +17,9 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 	@Query("select u from User u where u.userName=?1 and u.password=?2")
 	User queryByUsernameAndPassword(String userName, String password);
 
+	@Query("select u from User u where u.userName=?1")
+	User existsByUsername(String userName);
+
+	@Query("select u from User u where u.userName=?1 and u.status=?2")
+	User queryByUsernameAndStatus(String userName, String status);
 }

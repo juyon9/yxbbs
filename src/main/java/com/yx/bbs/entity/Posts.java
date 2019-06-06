@@ -27,7 +27,7 @@ public class Posts implements Serializable {
 	private String content;
 
 	@Column(name = "author", nullable = false)
-	private int author;
+	private long author;
 
 	@Column(name = "c_time", nullable = false)
 	private Timestamp createTime;
@@ -68,11 +68,11 @@ public class Posts implements Serializable {
 		this.content = content;
 	}
 
-	public int getAuthor() {
+	public long getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(int author) {
+	public void setAuthor(long author) {
 		this.author = author;
 	}
 

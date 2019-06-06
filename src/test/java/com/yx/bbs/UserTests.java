@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -17,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.yx.bbs.dao.UserRepository;
 import com.yx.bbs.entity.User;
+import com.yx.bbs.service.UserService;
 import com.yx.bbs.util.StringUtil;
 
 @RunWith(SpringRunner.class)
@@ -27,6 +30,9 @@ public class UserTests {
 
 	@Autowired
 	private UserRepository repo;
+
+	@Resource(name = "userServiceImpl")
+	private UserService userService;
 
 	@Test
 	public void saveUsers() {
@@ -39,11 +45,9 @@ public class UserTests {
 	}
 
 	@Test
-	public void updateUser() {
-		User user = new User("Juyon12@163.com", StringUtil.encodeStr("123456"), "Juyon12", "y",
-				new Timestamp(System.currentTimeMillis()));
-		user.setId(11);
-		repo.save(user);
+	public void updatePassword() {
+		User user = new User("1007719768@qq.com", "654321", null, null, null);
+		userService.updatePasswd(user);
 	}
 
 	@Test
@@ -59,6 +63,16 @@ public class UserTests {
 	@Test
 	public void login() {
 		User u = repo.queryByUsernameAndPassword("juyon01@163.com", StringUtil.encodeStr("1234567"));
+		if (u != null) {
+			LOG.warn(u.toString());
+		} else {
+			LOG.warn("用户不存在...");
+		}
+	}
+
+	@Test
+	public void existsUsername() {
+		User u = repo.existsByUsername("admin2015@cji.com ");
 		if (u != null) {
 			LOG.warn(u.toString());
 		} else {
